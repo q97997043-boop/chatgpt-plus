@@ -1,0 +1,390 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ChatGPT Plus — Активация</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0a0f;--surface:#111118;--border:#1e1e2e;--accent:#10b981;--accent2:#059669;--text:#e2e8f0;--muted:#64748b;--error:#ef4444;--warning:#f59e0b}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;min-height:100vh}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 60% at 20% 20%,rgba(16,185,129,.07) 0%,transparent 60%),radial-gradient(ellipse 60% 80% at 80% 80%,rgba(5,150,105,.05) 0%,transparent 60%);pointer-events:none;z-index:0}
+body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(16,185,129,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(16,185,129,.025) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0}
+nav{position:relative;z-index:10;border-bottom:1px solid var(--border);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:60px}
+.nav-logo{font-size:18px;font-weight:800;letter-spacing:-.5px}.nav-logo span{color:var(--accent)}
+.nav-tabs{display:flex;gap:4px}
+.tab-btn{padding:7px 16px;border-radius:8px;border:none;background:transparent;color:var(--muted);font-family:'Syne',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s}
+.tab-btn.active{background:rgba(16,185,129,.12);color:var(--accent)}
+.page{display:none;position:relative;z-index:1}.page.active{display:block}
+.client-wrap{min-height:calc(100vh - 60px);display:flex;align-items:center;justify-content:center;padding:24px}
+.client-card{width:100%;max-width:560px;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:36px;position:relative;overflow:hidden;animation:fadeUp .5s ease both}
+.client-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--accent),transparent);opacity:.5}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.c-header{text-align:center;margin-bottom:32px}
+.c-icon{width:52px;height:52px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:14px;display:inline-flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:16px;box-shadow:0 0 30px rgba(16,185,129,.25)}
+.c-title{font-size:28px;font-weight:800;letter-spacing:-.8px;margin-bottom:8px}.c-title em{font-style:normal;color:var(--accent)}
+.c-sub{color:var(--muted);font-family:'DM Mono',monospace;font-size:13px}
+.steps-box{margin-bottom:24px}
+.slabel{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--accent);margin-bottom:12px;font-family:'DM Mono',monospace}
+.step{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);align-items:flex-start}.step:last-child{border:none}
+.sn{width:24px;height:24px;flex-shrink:0;background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.25);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--accent);font-family:'DM Mono',monospace}
+.st{font-size:13px;color:var(--muted);line-height:1.5;padding-top:3px}.st a{color:var(--accent);text-decoration:none;font-family:'DM Mono',monospace}
+.lbl{display:block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:8px;font-family:'DM Mono',monospace}
+.tinput{width:100%;background:rgba(16,185,129,.04);border:1px solid var(--border);border-radius:12px;padding:14px;color:var(--text);font-family:'DM Mono',monospace;font-size:12px;resize:none;height:130px;outline:none;transition:border-color .2s,box-shadow .2s;line-height:1.6}
+.tinput::placeholder{color:var(--muted);opacity:.4}.tinput:focus{border-color:rgba(16,185,129,.4);box-shadow:0 0 0 3px rgba(16,185,129,.07)}.tinput.err{border-color:var(--error)}
+.btn-main{width:100%;padding:15px;background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;border-radius:12px;color:#fff;font-family:'Syne',sans-serif;font-size:15px;font-weight:700;cursor:pointer;margin-top:14px;transition:transform .2s,box-shadow .2s;position:relative;overflow:hidden}
+.btn-main:hover{transform:translateY(-2px);box-shadow:0 10px 35px rgba(16,185,129,.3)}.btn-main:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.shine{position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.13),transparent);animation:shine 2.5s infinite}
+@keyframes shine{to{left:100%}}
+.sbox{border-radius:12px;padding:14px;margin-top:14px;font-size:13px;display:none;align-items:center;gap:10px;animation:fadeUp .3s ease both}.sbox.show{display:flex}
+.sbox.loading{background:rgba(16,185,129,.07);border:1px solid rgba(16,185,129,.2);color:var(--accent)}
+.sbox.success{background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.3);color:#34d399}
+.sbox.error{background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.2);color:#f87171}
+.spinner{width:16px;height:16px;flex-shrink:0;border:2px solid rgba(16,185,129,.2);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.admin-gate{min-height:calc(100vh - 60px);display:flex;align-items:center;justify-content:center;padding:24px}
+.pass-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px;width:100%;max-width:340px;text-align:center}
+.pass-title{font-size:20px;font-weight:800;margin-bottom:6px}.pass-sub{color:var(--muted);font-size:13px;font-family:'DM Mono',monospace;margin-bottom:20px}
+.pass-in{width:100%;background:rgba(16,185,129,.04);border:1px solid var(--border);border-radius:10px;padding:12px;color:var(--text);font-family:'DM Mono',monospace;font-size:15px;outline:none;text-align:center;letter-spacing:3px;transition:border-color .2s;margin-bottom:10px}
+.pass-in:focus{border-color:rgba(16,185,129,.4)}
+.btn-enter{width:100%;padding:12px;background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;border-radius:10px;color:#fff;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;cursor:pointer}
+.pass-err{color:var(--error);font-size:12px;font-family:'DM Mono',monospace;margin-top:8px;display:none}
+.admin-wrap{padding:28px 24px;max-width:1000px;margin:0 auto}
+.admin-title{font-size:22px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
+.admin-sub{color:var(--muted);font-family:'DM Mono',monospace;font-size:12px;margin-bottom:24px}
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px}
+.stat-num{font-size:30px;font-weight:800;letter-spacing:-1px}.stat-num.green{color:var(--accent)}.stat-num.red{color:var(--error)}.stat-num.yellow{color:var(--warning)}
+.stat-lbl{font-size:11px;color:var(--muted);font-family:'DM Mono',monospace;margin-top:3px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:22px}
+.ptitle{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px;color:var(--text);font-family:'DM Mono',monospace}
+.cdk-in{width:100%;background:rgba(16,185,129,.04);border:1px solid var(--border);border-radius:10px;padding:12px;color:var(--text);font-family:'DM Mono',monospace;font-size:12px;resize:none;height:110px;outline:none;transition:border-color .2s;line-height:1.7}
+.cdk-in:focus{border-color:rgba(16,185,129,.4)}.cdk-in::placeholder{color:var(--muted);opacity:.4}
+.btn-add{width:100%;padding:10px;background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.2);border-radius:10px;color:var(--accent);font-family:'Syne',sans-serif;font-size:13px;font-weight:700;cursor:pointer;margin-top:8px;transition:all .2s}
+.btn-add:hover{background:rgba(16,185,129,.18)}
+.scroller{max-height:320px;overflow-y:auto;margin-top:14px}.scroller::-webkit-scrollbar{width:3px}.scroller::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+.cdk-item{display:flex;align-items:center;justify-content:space-between;padding:9px 11px;border-radius:8px;margin-bottom:5px;border:1px solid var(--border);font-family:'DM Mono',monospace;font-size:11px}.cdk-item.used{opacity:.4}
+.cdk-code{color:var(--text);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-right:8px}.cdk-for{font-size:10px;color:var(--muted)}
+.badge{padding:3px 7px;border-radius:5px;font-size:10px;font-weight:700;flex-shrink:0}.badge.free{background:rgba(16,185,129,.12);color:var(--accent)}.badge.used{background:rgba(100,116,139,.12);color:var(--muted)}.btn-del{background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);color:#f87171;border-radius:5px;padding:2px 7px;font-size:10px;cursor:pointer;font-family:"DM Mono",monospace;margin-left:6px}.btn-del{background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);color:#f87171;border-radius:5px;padding:2px 7px;font-size:10px;cursor:pointer;font-family:"DM Mono",monospace;margin-left:6px}
+.log-item{padding:11px;border-radius:8px;border:1px solid var(--border);margin-bottom:7px;font-family:'DM Mono',monospace;font-size:11px}.log-item.ok{border-color:rgba(16,185,129,.2)}.log-item.fail{border-color:rgba(239,68,68,.2)}
+.log-time{color:var(--muted);font-size:10px;margin-bottom:3px}.log-email{color:var(--text);font-weight:500;margin-bottom:2px}.log-cdk{color:var(--accent);margin-bottom:2px}.log-ok{color:#34d399}.log-fail{color:#f87171}
+.empty{text-align:center;padding:28px;color:var(--muted);font-family:'DM Mono',monospace;font-size:12px}
+.sync-btn{padding:6px 12px;background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.2);border-radius:8px;color:var(--accent);font-family:'DM Mono',monospace;font-size:11px;cursor:pointer;margin-left:8px;transition:all .2s}
+.sync-btn:hover{background:rgba(16,185,129,.2)}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-logo">ChatGPT<span>Plus</span></div>
+  <div class="nav-tabs">
+    <button class="tab-btn active" onclick="goTab('client',this)">🚀 Активация</button>
+    <button class="tab-btn" onclick="goTab('admin',this)">⚙️ Управление</button>
+  </div>
+</nav>
+<div class="page active" id="page-client">
+  <div class="client-wrap">
+    <div class="client-card">
+      <div class="c-header">
+        <div class="c-icon">✦</div>
+        <div class="c-title">Активация <em>Plus</em></div>
+        <div class="c-sub">// быстро · безопасно · автоматически</div>
+      </div>
+      <div class="steps-box">
+        <div class="slabel">Как получить AuthSession</div>
+        <div class="step"><div class="sn">1</div><div class="st">Войдите в аккаунт ChatGPT через браузер</div></div>
+        <div class="step"><div class="sn">2</div><div class="st">Откройте: <a href="https://chatgpt.com/api/auth/session" target="_blank">chatgpt.com/api/auth/session</a></div></div>
+        <div class="step"><div class="sn">3</div><div class="st">Скопируйте всё содержимое и вставьте ниже</div></div>
+      </div>
+      <div style="margin-bottom:10px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <div style="width:22px;height:22px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#000;flex-shrink:0">1</div>
+          <span style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);font-family:'DM Mono',monospace">Вставьте AuthSession JSON</span>
+        </div>
+        <textarea class="tinput" id="tokenInput" placeholder='{"user":{"id":"user-...","email":"you@gmail.com"},"accessToken":"eyJ..."}'></textarea>
+        <div style="display:flex;align-items:center;gap:8px;margin-top:8px">
+          <button onclick="verifySession()" style="padding:8px 18px;background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.25);border-radius:8px;color:var(--accent);font-family:'DM Mono',monospace;font-size:12px;cursor:pointer;transition:all .2s">✓ Проверить</button>
+          <span id="step1Status" style="font-size:12px;font-family:'DM Mono',monospace"></span>
+        </div>
+      </div>
+      <div id="step2wrap" style="opacity:0.4;transition:opacity .3s">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <div style="width:22px;height:22px;background:var(--muted);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#000;flex-shrink:0" id="step2num">2</div>
+          <span style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);font-family:'DM Mono',monospace">Активация подписки</span>
+        </div>
+        <button class="btn-main" id="activateBtn" onclick="doActivate()" disabled>
+          <div class="shine"></div>⚡ Начать активацию
+        </button>
+      </div>
+      <div class="sbox loading" id="stLoad"><div class="spinner"></div><div id="loadMsg">Проверяем CDK...</div></div>
+      <div class="sbox success" id="stOk"><div>✅</div><div><strong>ChatGPT Plus активирован!</strong><br>Обновите страницу ChatGPT — подписка уже активна.</div></div>
+      <div class="sbox error" id="stErr"><div>⚠️</div><div id="errMsg">Ошибка.</div></div>
+    </div>
+  </div>
+</div>
+<div class="page" id="page-admin">
+  <div id="gate" class="admin-gate">
+    <div class="pass-card">
+      <div class="pass-title">🔐 Управление</div>
+      <div class="pass-sub">Введите пароль администратора</div>
+      <input class="pass-in" type="password" id="passIn" placeholder="••••••" onkeydown="if(event.key==='Enter')chkPass()">
+      <button class="btn-enter" onclick="chkPass()">Войти</button>
+      <div class="pass-err" id="passErr">Неверный пароль</div>
+    </div>
+  </div>
+  <div id="adminPanel" style="display:none">
+    <div class="admin-wrap">
+      <div class="admin-title">⚙️ Панель CDK</div>
+      <div class="admin-sub">// Google Sheets · ChatGPT Plus активация</div>
+      <div class="stats-row">
+        <div class="stat-card"><div class="stat-num green" id="sFree">0</div><div class="stat-lbl">Свободных CDK</div></div>
+        <div class="stat-card"><div class="stat-num red" id="sUsed">0</div><div class="stat-lbl">Использованных</div></div>
+        <div class="stat-card"><div class="stat-num yellow" id="sTotal">0</div><div class="stat-lbl">Всего CDK</div></div>
+      </div>
+      <div class="grid2">
+        <div class="panel">
+          <div class="ptitle">➕ Добавить CDK <button class="sync-btn" onclick="loadFromSheets()">🔄 Обновить</button></div>
+          <textarea class="cdk-in" id="cdkIn" placeholder="CDK коды (каждый с новой строки)"></textarea>
+          <button class="btn-add" onclick="addCDKs()">➕ Добавить</button>
+          <div style="margin-top:18px">
+            <div class="ptitle">📋 Список CDK</div>
+            <div class="scroller" id="cdkList"><div class="empty">Нет CDK</div></div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="ptitle">📊 История активаций</div>
+          <div class="scroller" id="logList"><div class="empty">Пусто</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+// =============================================
+// SOZLAMALAR
+// =============================================
+const PASS = 'admin2024';
+const SHEETS_API = 'https://script.google.com/macros/s/AKfycbz84QuWBwgsJwnx_v77QcLldNu3ECGBvD7LYkRiRMciWG3Qo6rki2lX4e7DkqEWB60d/exec';
+const OLD_API = 'https://receipt-api.nitro.xin';
+// =============================================
+
+function goTab(n,b){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(x=>x.classList.remove('active'));
+  document.getElementById('page-'+n).classList.add('active');
+  b.classList.add('active');
+  if(n==='admin') renderAdmin();
+}
+
+// CDK — Google Sheets dan o'qish/yozish
+async function loadFromSheets(){
+  try{
+    const r = await fetch(SHEETS_API + '?action=get');
+    const d = await r.json();
+    if(d.success && d.cdks){
+      // Sheets dagi CDK larni local bilan birlashtirish
+      const local = getCDKs();
+      const localCodes = new Set(local.map(x=>x.code));
+      d.cdks.forEach(row=>{
+        if(row.cdk && !localCodes.has(row.cdk)){
+          local.push({
+            code: row.cdk,
+            used: row.status === 'used',
+            usedFor: row.email || null,
+            addedAt: row.timestamp || new Date().toLocaleString('ru')
+          });
+        }
+      });
+      saveCDKs(local);
+      renderAdmin();
+    }
+  } catch(e){
+    console.log('Sheets yuklashda xato:', e);
+  }
+}
+
+async function saveToSheets(cdk, email, status){
+  try{
+    const url = SHEETS_API + '?cdk=' + encodeURIComponent(cdk) + '&email=' + encodeURIComponent(email) + '&status=' + encodeURIComponent(status) + '&action=save';
+    await fetch(url, {mode: 'no-cors'});
+  } catch(e){
+    console.log('Sheets saqlashda xato:', e);
+  }
+}
+
+function getCDKs(){try{return JSON.parse(localStorage.getItem('cdks')||'[]')}catch{return[]}}
+function saveCDKs(a){localStorage.setItem('cdks',JSON.stringify(a))}
+function getLogs(){try{return JSON.parse(localStorage.getItem('logs')||'[]')}catch{return[]}}
+function saveLogs(a){localStorage.setItem('logs',JSON.stringify(a))}
+
+function deleteCDK(code){
+  if(!confirm('CDKni ochirish: ' + code + '?')) return;
+  const c = getCDKs().filter(x => x.code !== code);
+  saveCDKs(c);
+  renderAdmin();
+}
+function chkPass(){
+  if(document.getElementById('passIn').value===PASS){
+    document.getElementById('gate').style.display='none';
+    document.getElementById('adminPanel').style.display='block';
+    renderAdmin();
+    loadFromSheets(); // Sheets dan yuklash
+  } else {
+    document.getElementById('passErr').style.display='block';
+  }
+}
+
+function renderAdmin(){
+  const c=getCDKs(), l=getLogs();
+  document.getElementById('sFree').textContent=c.filter(x=>!x.used).length;
+  document.getElementById('sUsed').textContent=c.filter(x=>x.used).length;
+  document.getElementById('sTotal').textContent=c.length;
+  document.getElementById('cdkList').innerHTML=c.length===0
+    ?'<div class="empty">Нет CDK</div>'
+    :[...c].reverse().map(x=>`<div class="cdk-item ${x.used?'used':''}">
+      <div><div class="cdk-code">${x.code}</div>${x.used?`<div class="cdk-for">→ ${x.usedFor||'?'}</div>`:''}</div>
+      <div style="display:flex;align-items:center;gap:4px">
+        <span class="badge ${x.used?'used':'free'}">${x.used?'ИСПОЛЬЗОВАН':'СВОБОДЕН'}</span>
+        <button class="btn-del" onclick="deleteCDK('${x.code}')">✕</button>
+      </div>
+    </div>`).join('');
+  document.getElementById('logList').innerHTML=l.length===0
+    ?'<div class="empty">Пусто</div>'
+    :[...l].reverse().map(x=>`<div class="log-item ${x.ok?'ok':'fail'}">
+      <div class="log-time">${x.time}</div>
+      <div class="log-email">${x.email}</div>
+      <div class="log-cdk">${x.cdk}</div>
+      <div class="${x.ok?'log-ok':'log-fail'}">${x.ok?'✅ Успешно':'❌ '+x.err}</div>
+    </div>`).join('');
+}
+
+async function addCDKs(){
+  const r=document.getElementById('cdkIn').value.trim();
+  if(!r)return;
+  const lines=r.split('\n').map(l=>l.trim()).filter(Boolean);
+  const c=getCDKs();
+  const e=new Set(c.map(x=>x.code));
+  let n=0;
+  for(const code of lines){
+    if(!e.has(code)){
+      c.push({code, used:false, usedFor:null, addedAt:new Date().toLocaleString('ru')});
+      // Google Sheets ga saqlash
+      await saveToSheets(code, '', 'active');
+      n++;
+    }
+  }
+  saveCDKs(c);
+  document.getElementById('cdkIn').value='';
+  renderAdmin();
+  if(n>0) alert('✅ Добавлено '+n+' CDK!');
+}
+
+function verifySession(){
+  const raw = document.getElementById('tokenInput').value.trim();
+  const st = document.getElementById('step1Status');
+  const step2 = document.getElementById('step2wrap');
+  const btn = document.getElementById('activateBtn');
+  const num = document.getElementById('step2num');
+  if(!raw){st.textContent='❌ JSON kiriting!';st.style.color='#f87171';return;}
+  try{
+    const p = JSON.parse(raw);
+    const token = p.accessToken || p.access_token || '';
+    const email = p.user?.email || '';
+    if(!token || token.length < 20) throw new Error('accessToken topilmadi');
+    st.textContent = '✅ ' + (email || 'Akkaunt tasdiqlandi');
+    st.style.color = '#34d399';
+    step2.style.opacity = '1';
+    btn.disabled = false;
+    num.style.background = 'var(--accent)';
+  } catch(e){
+    st.textContent = '❌ Нотоғри формат — тўлиқ JSON кирит';
+    st.style.color = '#f87171';
+    step2.style.opacity = '0.4';
+    btn.disabled = true;
+  }
+}
+
+async function doActivate(){
+  const inp=document.getElementById('tokenInput'),
+        btn=document.getElementById('activateBtn'),
+        raw=inp.value.trim();
+  ['stLoad','stOk','stErr'].forEach(id=>document.getElementById(id).classList.remove('show'));
+  inp.classList.remove('err');
+  if(!raw){inp.classList.add('err');inp.focus();return}
+  let accessToken='',email='';
+  try{const p=JSON.parse(raw);accessToken=p.accessToken||p.access_token||'';email=p.user?.email||''}
+  catch{accessToken=raw}
+  if(!accessToken||accessToken.length<20){
+    inp.classList.add('err');
+    document.getElementById('errMsg').textContent='Неверный формат токена.';
+    document.getElementById('stErr').classList.add('show');
+    return;
+  }
+  // API requires raw session JSON as user field
+  const userField = raw;
+  const freeCDK=getCDKs().find(c=>!c.used);
+  if(!freeCDK){
+    document.getElementById('errMsg').textContent='❌ Нет доступных кодов. Обратитесь в поддержку.';
+    document.getElementById('stErr').classList.add('show');
+    return;
+  }
+  btn.disabled=true;
+  document.getElementById('loadMsg').textContent='Проверяем CDK...';
+  document.getElementById('stLoad').classList.add('show');
+  try{
+    document.getElementById('loadMsg').textContent='Проверяем аккаунт...';
+    const ur=await fetch(`${OLD_API}/external/public/check-user`,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({user:accessToken})
+    });
+    if(!ur.ok){const uerr=await ur.text().catch(()=>'');throw new Error('Ошибка аккаунта: '+uerr);}
+    document.getElementById('loadMsg').textContent='Активируем подписку...';
+    const or=await fetch(`${OLD_API}/stocks/public/outstock`,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({cdk:freeCDK.code,user:accessToken})
+    });
+    if(!or.ok)throw new Error('Ошибка активации');
+    const taskId=(await or.text()).trim();
+    let ok=false,em='';
+    for(let i=0;i<18;i++){
+      await new Promise(r=>setTimeout(r,10000));
+      document.getElementById('loadMsg').textContent=`Ожидаем... (${i+1}/18)`;
+      const pr=await fetch(`${OLD_API}/stocks/public/outstock/${taskId}`);
+      const pd=await pr.json();
+      if(!pd.pending){if(pd.success)ok=true;else em=pd.message||'Ошибка';break}
+    }
+    document.getElementById('stLoad').classList.remove('show');
+    if(ok){
+      // Local saqlash
+      const c=getCDKs();
+      const i=c.findIndex(x=>x.code===freeCDK.code);
+      if(i!==-1){c[i].used=true;c[i].usedFor=email||'unknown';c[i].usedAt=new Date().toLocaleString('ru');saveCDKs(c)}
+      const l=getLogs();
+      l.push({time:new Date().toLocaleString('ru'),email:email||'unknown',cdk:freeCDK.code,ok:true,err:''});
+      saveLogs(l);
+      // Google Sheets ga yozish
+      await saveToSheets(freeCDK.code, email||'unknown', 'used');
+      document.getElementById('stOk').classList.add('show');
+    } else {
+      const l=getLogs();
+      l.push({time:new Date().toLocaleString('ru'),email:email||'unknown',cdk:freeCDK.code,ok:false,err:em});
+      saveLogs(l);
+      // Sheets ga failed yozish
+      await saveToSheets(freeCDK.code, email||'unknown', 'failed');
+      document.getElementById('errMsg').textContent=em||'Ошибка активации.';
+      document.getElementById('stErr').classList.add('show');
+    }
+  } catch(e){
+    document.getElementById('stLoad').classList.remove('show');
+    document.getElementById('errMsg').textContent=e.message||'Ошибка соединения.';
+    document.getElementById('stErr').classList.add('show');
+  }
+  btn.disabled=false;
+}
+</script>
+</body>
+</html>
