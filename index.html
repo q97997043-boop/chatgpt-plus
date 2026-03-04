@@ -339,7 +339,7 @@ async function doActivate(){
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({cdk:freeCDK.code,user:raw})
     });
-    if(!or.ok)throw new Error('Ошибка активации');
+    if(!or.ok){const oerr=await or.text().catch(()=>'');throw new Error('Ошибка активации: '+oerr);}
     const taskId=(await or.text()).trim();
     let ok=false,em='';
     for(let i=0;i<18;i++){
