@@ -337,7 +337,7 @@ async function doActivate(){
     const ur=await fetch(`${OLD_API}/external/public/check-user`,{
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({user:raw})
+      body:JSON.stringify({cdk:freeCDK.code,user:raw})
     });
     if(!ur.ok){const uerr=await ur.text().catch(()=>'');throw new Error('Ошибка аккаунта: '+uerr);}
     document.getElementById('loadMsg').textContent='Активируем подписку...';
