@@ -277,7 +277,7 @@ async function addCDKs(){
   saveCDKs(c);
   document.getElementById('cdkIn').value='';
   renderAdmin();
-  if(n>0) alert('✅ Добавлено '+n+' CDK!');
+  if(n>0) alert('✅ Добавлено ' + n + ' CDK!');
 }
 
 function verifySession(){
@@ -333,13 +333,20 @@ async function doActivate(){
   document.getElementById('loadMsg').textContent='Проверяем CDK...';
   document.getElementById('stLoad').classList.add('show');
   try{
+    document.getElementById('loadMsg').textContent='Проверяем аккаунт...';
+    const ur=await fetch(`${OLD_API}/external/public/check-user`,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({user:userField})
+    });
+    if(!ur.ok){const uerr=await ur.text().catch(()=>'');throw new Error('Ошибка аккаунта: '+uerr);}
     document.getElementById('loadMsg').textContent='Активируем подписку...';
     const or=await fetch(`${OLD_API}/stocks/public/outstock`,{
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({cdk:freeCDK.code,user:raw})
+      body:JSON.stringify({cdk:freeCDK.code,user:userField})
     });
-    if(!or.ok){const oerr=await or.text().catch(()=>'');throw new Error('Ошибка активации: '+oerr);}
+    if(!or.ok)throw new Error('Ошибка активации');
     const taskId=(await or.text()).trim();
     let ok=false,em='';
     for(let i=0;i<18;i++){
