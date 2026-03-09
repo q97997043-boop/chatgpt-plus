@@ -343,10 +343,11 @@ async function doActivate(){
     // if(!ur.ok){const uerr=await ur.text().catch(()=>'');throw new Error('Ошибка аккаунта: '+uerr);}
     
     document.getElementById('loadMsg').textContent='Активируем подписку...';
+    // String o'rnida oddiy object jo'natayotgapmizki, orqada server uni xuddi tekst deb bilsin.
     const or=await fetch(api('/stocks/public/outstock'),{
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({cdk:freeCDK.code,user:userField})
+      body:JSON.stringify({cdk:freeCDK.code,user:raw}) // << raw() = userField
     });
     if(!or.ok)throw new Error('Ошибка активации');
     const taskId=(await or.text()).trim();
