@@ -322,8 +322,8 @@ async function doActivate(){
     document.getElementById('stErr').classList.add('show');
     return;
   }
-  // API requires raw session JSON as user field
-  const userField = raw;
+  // API requires just the access token as user field, just like in the working txt file
+  const userField = accessToken;
   const freeCDK=getCDKs().find(c=>!c.used);
   if(!freeCDK){
     document.getElementById('errMsg').textContent='❌ Нет доступных кодов. Обратитесь в поддержку.';
@@ -341,13 +341,12 @@ async function doActivate(){
     //   body:JSON.stringify({user:userField})
     // });
     // if(!ur.ok){const uerr=await ur.text().catch(()=>'');throw new Error('Ошибка аккаунта: '+uerr);}
-    
     document.getElementById('loadMsg').textContent='Активируем подписку...';
-    // String o'rnida oddiy object jo'natayotgapmizki, orqada server uni xuddi tekst deb bilsin.
+    // Send user: accessToken as per the API docs and the working Новий текстовый документ.txt
     const or=await fetch(api('/stocks/public/outstock'),{
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({cdk:freeCDK.code,user:raw}) // << raw() = userField
+      body:JSON.stringify({cdk:freeCDK.code,user:accessToken}) // << sending extracted accessToken
     });
     if(!or.ok)throw new Error('Ошибка активации');
     const taskId=(await or.text()).trim();
