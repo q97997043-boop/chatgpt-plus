@@ -166,7 +166,8 @@ nav{position:relative;z-index:10;border-bottom:1px solid var(--border);padding:0
 // =============================================
 const PASS = 'admin2024';
 const SHEETS_API = 'https://script.google.com/macros/s/AKfycbz84QuWBwgsJwnx_v77QcLldNu3ECGBvD7LYkRiRMciWG3Qo6rki2lX4e7DkqEWB60d/exec';
-const OLD_API = 'https://receipt-api.nitro.xin';
+const WORKER = localStorage.getItem('cf_worker') || 'https://my-worker.username.workers.dev'; // O'zgartiring yoki saytda kiriting
+function api(path){ return WORKER + '/api' + path; }
 // =============================================
 
 function goTab(n,b){
@@ -334,14 +335,15 @@ async function doActivate(){
   document.getElementById('stLoad').classList.add('show');
   try{
     document.getElementById('loadMsg').textContent='Проверяем аккаунт...';
-    const ur=await fetch(`${OLD_API}/external/public/check-user`,{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({user:userField})
-    });
-    if(!ur.ok){const uerr=await ur.text().catch(()=>'');throw new Error('Ошибка аккаунта: '+uerr);}
+    // const ur=await fetch(api('/external/public/check-user'),{
+    //   method:'POST',
+    //   headers:{'Content-Type':'application/json'},
+    //   body:JSON.stringify({user:userField})
+    // });
+    // if(!ur.ok){const uerr=await ur.text().catch(()=>'');throw new Error('Ошибка аккаунта: '+uerr);}
+    
     document.getElementById('loadMsg').textContent='Активируем подписку...';
-    const or=await fetch(`${OLD_API}/stocks/public/outstock`,{
+    const or=await fetch(api('/stocks/public/outstock'),{
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({cdk:freeCDK.code,user:userField})
@@ -352,7 +354,7 @@ async function doActivate(){
     for(let i=0;i<18;i++){
       await new Promise(r=>setTimeout(r,10000));
       document.getElementById('loadMsg').textContent=`Ожидаем... (${i+1}/18)`;
-      const pr=await fetch(`${OLD_API}/stocks/public/outstock/${taskId}`);
+      const pr=await fetch(api(`/stocks/public/outstock/${taskId}`));
       const pd=await pr.json();
       if(!pd.pending){if(pd.success)ok=true;else em=pd.message||'Ошибка';break}
     }
