@@ -166,7 +166,7 @@ nav{position:relative;z-index:10;border-bottom:1px solid var(--border);padding:0
 // =============================================
 const PASS = 'admin2024';
 const SHEETS_API = 'https://script.google.com/macros/s/AKfycbz84QuWBwgsJwnx_v77QcLldNu3ECGBvD7LYkRiRMciWG3Qo6rki2lX4e7DkqEWB60d/exec';
-const WORKER = localStorage.getItem('cf_worker') || 'https://my-worker.username.workers.dev'; // O'zgartiring yoki saytda kiriting
+const WORKER = window.location.origin; // O'zgartirishingiz shart emas, server qayerda bo'lsa o'zi o'sha yerdan oladi
 function api(path){ return WORKER + '/api' + path; }
 // =============================================
 
